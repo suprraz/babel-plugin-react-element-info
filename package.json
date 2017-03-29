@@ -1,0 +1,48 @@
+{
+  "name": "babel-plugin-react-element-info",
+  "version": "1.0.1",
+  "description": "Adds React properties",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint src test",
+    "test:unit": "babel-node test/index.js",
+    "test": "npm run lint && npm run test:unit && npm run flow",
+    "build": "rm -rf lib && mkdir lib && babel src --out-dir lib",
+    "flow": "flow",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suprraz/babel-plugin-react-element-info.git"
+  },
+  "keywords": [
+    "babel",
+    "babel-plugin",
+    "react",
+    "elment",
+    "jsx"
+  ],
+  "files": [
+    "lib",
+    "src"
+  ],
+  "author": "Razvan Suprovici (https://github.com/suprraz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suprraz/babel-plugin-react-element-info/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^7.0.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "eslint": "^3.6.1",
+    "eslint-plugin-flowtype": "^2.19.0",
+    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-mocha": "^4.5.1",
+    "flow-bin": "^0.42.0",
+    "mocha": "^3.1.0"
+  }
+}

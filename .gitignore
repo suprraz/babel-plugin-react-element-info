@@ -1,0 +1,11 @@
+# npm
+/node_modules
+
+# build
+/lib
+
+# log
+*.log
+
+# OS files
+.DS_STORE
