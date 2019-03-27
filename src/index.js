@@ -1,6 +1,7 @@
 // @flow weak
+import {basename, extname} from 'path';
 
-export default function({types: t}) {
+export default function reactElementInfo({types: t}) {
   const defaultPrefix = 'data-qa';
   let prefix;
   let filenameAttr;
@@ -16,25 +17,34 @@ export default function({types: t}) {
       filenameAttr = `${prefix}-file`;
       nodeNameAttr = `${prefix}-node`;
     },
+
     JSXOpeningElement(path, state) {
-      const attributes = path.container.openingElement.attributes;
+      const openingElement = path.container.openingElement;
+      const attributes = openingElement.attributes;
 
       const newAttributes = [];
 
-      if (path.container && path.container.openingElement &&
-        path.container.openingElement.name &&
-        path.container.openingElement.name.name) {
+      if (openingElement.name && openingElement.name.name) {
         newAttributes.push(t.jSXAttribute(
           t.jSXIdentifier(nodeNameAttr),
-          t.stringLiteral(path.container.openingElement.name.name))
-        );
+          t.stringLiteral(openingElement.name.name),
+        ));
       }
 
-      if (state.file && state.file.opts && state.file.opts.basename) {
+      let name;
+      if (state.file && state.file.opts) {
+        if (state.file.opts.basename) {
+          name = state.file.opts.basename;
+        } else if (state.file.opts.filename) {
+          name = basename(state.file.opts.filename, extname(state.file.opts.filename));
+        }
+      }
+
+      if (name) {
         newAttributes.push(t.jSXAttribute(
           t.jSXIdentifier(filenameAttr),
-          t.stringLiteral(state.file.opts.basename))
-        );
+          t.stringLiteral(name)
+        ));
       }
 
       attributes.push(...newAttributes);
