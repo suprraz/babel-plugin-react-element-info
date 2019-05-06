@@ -24,12 +24,17 @@ export default function reactElementInfo({types: t}) {
 
       const newAttributes = [];
 
-      if (openingElement.name && openingElement.name.name) {
-        newAttributes.push(t.jSXAttribute(
-          t.jSXIdentifier(nodeNameAttr),
-          t.stringLiteral(openingElement.name.name),
-        ));
+      const elementName = (openingElement.name && openingElement.name.name) ||
+        (openingElement.name.property && openingElement.name.property.name);
+
+      if (elementName === 'Fragment') {
+        return;
       }
+
+      newAttributes.push(t.jSXAttribute(
+        t.jSXIdentifier(nodeNameAttr),
+        t.stringLiteral(elementName),
+      ));
 
       let name;
       if (state.file && state.file.opts) {
